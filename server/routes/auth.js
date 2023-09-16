@@ -9,18 +9,18 @@ const auth = require("../middlewares/auth");
 authRouter.post("/api/signup",async(req,res)=>{
     try 
     {
-        const {auth_name_signup , auth_email_signup , auth_password_signup} = req.body;
-        const existingUser = await User.findOne({email:auth_email_signup});
+        const {auth_name , auth_email , auth_password} = req.body;
+        const existingUser = await User.findOne({email:auth_email});
         if(existingUser)
         {
             return res.status(400).json({msg:"User with same Email already exists!"});
         }
         
-        const hashedPassword =await bcryptjs.hash(auth_password_signup,8);
+        const hashedPassword =await bcryptjs.hash(auth_password,8);
         let user = new User({
-            email:auth_email_signup,
+            email:auth_email,
             password: hashedPassword,
-            name:auth_name_signup,
+            name:auth_name,
         })
         user = await user.save();
         res.json(user);
@@ -35,13 +35,13 @@ authRouter.post("/api/signup",async(req,res)=>{
 authRouter.post("/api/signin", async(req,res) => {
     try
     {
-        const {auth_email_signin,auth_password_signin} = req.body;
-        const user = await User.findOne({email:auth_email_signin});
+        const {auth_email,auth_password} = req.body;
+        const user = await User.findOne({email:auth_email});
         if(!user)
         {
             return res.status(400).json({msg:"User with this email does not exist!"});
         }
-        const isMatch = await bcryptjs.compare(auth_password_signin,user.password);
+        const isMatch = await bcryptjs.compare(auth_password,user.password);
         if(!isMatch)
         {
             return res.status(400).json({msg:"Incorrect password!"});

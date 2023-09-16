@@ -49,8 +49,18 @@ class AuthService
                 localStorage.setItem('x-user-id',resdata['_id']);
                 Toaster("Login successful!");
             }
-            httpErrorHandle(response,onSuccess);
+            await httpErrorHandle(response,onSuccess);
+
+            function delay(ms) {
+                return new Promise((resolve) => {
+                  setTimeout(resolve, ms);
+                });
+              }
+
+            await delay(1000);
+
             return response;
+            
         } 
         catch (e) 
         {

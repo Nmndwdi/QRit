@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-// import ReactDOM from 'react-dom';
-import Formsignup from '../widgets/Formsignup';
-import Formsignin from '../widgets/Formsignin';
+import AuthForm from '../widgets/AuthForm';
 import '../screens/auth.css'
 
 function Auth() {
@@ -23,10 +21,10 @@ const [auth, setauth] = useState();
             <div>
               <label><input type="radio" name="auth" value="signup" checked={auth === 'signup'} onChange={handleChange}/> Signup</label>
               <br></br>
-              {auth==='signup' ?(<Formsignup></Formsignup>):(<></>)}
+              {auth==='signup' ?(<AuthForm nameShouldBeShown={true} buttonName={'Signup'}></AuthForm>):(<></>)}
               <label><input type="radio" name="auth" value="signin" checked={auth === 'signin'} onChange={handleChange}/> Signin</label>
               <br></br>
-              {auth==='signin' ?(<Formsignin></Formsignin>):(<></>)}
+              {auth==='signin' ?(<AuthForm nameShouldBeShown={false} buttonName={'Signin'}></AuthForm>):(<></>)}
             </div>
       </div>
     </div>

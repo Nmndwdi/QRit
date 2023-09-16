@@ -6,6 +6,7 @@ import UserItems from '../widgets/UserItems';
 import HomeService from "../services/home_service";
 
 function Home() {
+
   const navigate = useNavigate();
 
   const logout = () => {
