@@ -94,6 +94,67 @@ class HomeService
             return null;
         }
     }
+
+    static async DeleteItem(objectId)
+    {
+        try {
+            const id=localStorage.getItem('x-user-id');
+            const token=localStorage.getItem('x-auth-token');
+            if(token!=null)
+            {
+                const tokenres = await fetch('http://localhost:4000/tokenIsValid',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'x-auth-token':token,
+                    },
+                });
+                const tokenresdata = await tokenres.json();
+                if(tokenresdata===true)
+                {
+                    const response = await fetch('http://localhost:4000/api/delete-item',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type': 'application/json; charset=UTF-8',
+                            'x-auth-token':token,
+                        },
+                        body:JSON.stringify(
+                            {
+                                id,
+                                objectId,
+                            }
+                        )
+                    });
+
+                    // const resdata = await response.json();
+                    // console.log(resdata);
+                    function onSuccess()
+                    {
+                        Toaster("Item Deleted Successfully !");
+                    }
+                    httpErrorHandle(response,onSuccess);
+                    if(response.status===200) return true;
+                    else return false;
+                }
+                else
+                {
+                    console.log("Signin again , Your token is invalid");
+                    alert("Signin again , Your token is invalid");
+                    return false;
+                }
+            }
+            else
+            {
+                console.log("Signin again , Your token is invalid");
+                alert("Signin again , Your token is invalid");
+                return false;
+            }
+        } 
+        catch (e) 
+        {
+            alert(e.message);
+        }
+    }
 }
 
 export default HomeService;

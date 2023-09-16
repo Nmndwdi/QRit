@@ -9,6 +9,7 @@ function UserItems({isChanged,toggleStateChanged}) {
 
   const [localIsChanged , setLocalIsChanged] = useState(isChanged);
   const [data,setData] = useState(null);
+
   async function RetrieveData()
   {
     const resdata = await HomeService.GetItems();
@@ -37,7 +38,7 @@ function UserItems({isChanged,toggleStateChanged}) {
 
   return (
     <div>
-        {data!=null ?(<Listview data={data} shouldBeShown={shouldBeShown}/>):(<></>)}
+        {data!=null ?(<Listview data={data} shouldBeShown={shouldBeShown} RetrieveData={RetrieveData}/>):(<></>)}
     </div>
   )
 }

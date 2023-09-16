@@ -5,12 +5,24 @@ import '../screens/auth.css'
 
 function Auth() {
 
-const [auth, setauth] = useState();
+    const [nameShouldBeShown,setNameShouldBeShown] = useState(false);
+    const [buttonName,setButtonName] = useState('Signin');
+
+const [auth, setauth] = useState('signin');
   const handleChange = e => {
     const target = e.target;
     if (target.checked) {
       setauth(target.value);
       // console.log(auth);
+      if(target.value==='signup')
+      {
+        setNameShouldBeShown(true);
+        setButtonName('Signup');
+      }
+      else{
+        setNameShouldBeShown(false);
+        setButtonName('Signin');
+      }
     }
   };
 
@@ -19,12 +31,11 @@ const [auth, setauth] = useState();
       <div className='Center'>
         <h1>Welcome to Qrit</h1>
             <div>
-              <label><input type="radio" name="auth" value="signup" checked={auth === 'signup'} onChange={handleChange}/> Signup</label>
+              <label><input type="radio" name="auth" value="signup" checked={auth === 'signup'} onChange={handleChange} /> Signup</label>
               <br></br>
-              {auth==='signup' ?(<AuthForm nameShouldBeShown={true} buttonName={'Signup'}></AuthForm>):(<></>)}
               <label><input type="radio" name="auth" value="signin" checked={auth === 'signin'} onChange={handleChange}/> Signin</label>
+              <AuthForm nameShouldBeShown={nameShouldBeShown} buttonName={buttonName}></AuthForm>
               <br></br>
-              {auth==='signin' ?(<AuthForm nameShouldBeShown={false} buttonName={'Signin'}></AuthForm>):(<></>)}
             </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ itemRouter.post("/api/add-item",auth,async (req,res) => {
             chkitem.items.push({
                 itemName:item_name,
                 itemLink:item_link,
-            })
+            });
             chkitem = await chkitem.save();
             res.json(chkitem);
         }
@@ -47,6 +47,40 @@ itemRouter.post("/api/get-items",async (req,res) => {
         else
         {
             return res.status(400).json({msg:'user does not exists'});
+        }
+    }
+    catch (e)
+    {
+        res.status(500).json({error: e.message});
+    }
+});
+
+itemRouter.post("/api/delete-item",auth,async (req,res) => {
+    try {
+        const { id,objectId } = req.body;
+
+        let item =  await Item.findById(id);
+
+        if(item)
+        {
+            try {
+                for(let i=0;i<item.items.length;i++)
+                {
+                    if(item.items[i]._id.toString() === objectId.toString())
+                    {
+                        item.items.splice(i,1);
+                        break;
+                    }
+                }
+                item = await item.save();
+                res.json(item);
+            } catch (error) {
+                res.status(400).json({msg:'No item with this id'});
+            }
+        }
+        else
+        {
+            res.status(400).json({msg:'No user with this Id'});
         }
     } catch (e) {
         res.status(500).json({error: e.message});

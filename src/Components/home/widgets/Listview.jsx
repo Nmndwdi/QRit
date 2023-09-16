@@ -1,25 +1,19 @@
 import React from 'react';
 // import ItemContainer from './ItemContainer';
 import ItemButton from './ItemButton';
+import HomeService from '../services/home_service';
 
-const Listview = ({ data , shouldBeShown }) => {
-    // console.log(data);
+const Listview = ({ data , shouldBeShown , RetrieveData }) => {
     const arrdata = Object.entries(data.items);
-    // console.log(arrdata);
-    // const arrDataName = [];
-    // const arrDataLink = [];
-    // const newArr = [];
 
-    // for(let i=0;i<arrdata.length;i++)
-    // {
-    //     arrDataName.push(arrdata[i][1].itemName);
-    //     arrDataLink.push(arrdata[i][1].itemLink);
-    //     newArr.push([arrdata[i][1].itemName, arrdata[i][1].itemLink]);
-    // }
-
-  function buttonClicked(id)
+  async function deleteItem(id)
   {
-    console.log(id);
+    const res = await HomeService.DeleteItem(id);
+    if(res===true) RetrieveData();
+  }
+  function updateItem(id)
+  {
+    console.log(id,"update me!");
   }
 
   return (
@@ -27,13 +21,16 @@ const Listview = ({ data , shouldBeShown }) => {
         <p>user items list</p>
         <ul>
           {arrdata.map((item, index) => (
-            // <ItemContainer key={index} itemName={item[1].itemName} itemLink={item[1].itemLink}></ItemContainer>
+            // <div key={index}>
+            //   <ItemContainer itemName={item[1].itemName} itemLink={item[1].itemLink}></ItemContainer>
+            //    {shouldBeShown===true ?(<ItemButton onDelete={() => deleteItem(item[1]._id)} onUpdate={() => updateItem(item[1]._id)}></ItemButton>):(<></>)}
+            // </div>
+            
             <li key={index}>
               <span>Name: {item[1].itemName}</span>
               <br></br>
               <a href={item[1].itemLink}>Link: {item[1].itemLink}</a>
-              {/* {shouldBeShown===true ?(<button onClick={() => buttonClicked(item[1]._id)}>give command</button>):(<></>)} */}
-              {shouldBeShown===true ?(<ItemButton onClick={() => buttonClicked(item[1]._id)}></ItemButton>):(<></>)}
+              {shouldBeShown===true ?(<ItemButton onDelete={() => deleteItem(item[1]._id)} onUpdate={() => updateItem(item[1]._id)}></ItemButton>):(<></>)}
             </li>
           ))}
         </ul>

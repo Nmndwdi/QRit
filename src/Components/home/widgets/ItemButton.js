@@ -1,10 +1,10 @@
 import React from 'react'
 
-function ItemButton({onClick}) {
+function ItemButton({onDelete,onUpdate}) {
   return (
     <>
-        <button onClick={onClick}>Update</button>
-        <button onClick={onClick}>Delete</button>
+        <button onClick={onUpdate}>Update</button>
+        <button onClick={onDelete}>Delete</button>
     </>
   )
 }
