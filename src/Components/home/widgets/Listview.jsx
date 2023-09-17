@@ -5,7 +5,7 @@ import HomeService from '../services/home_service';
 import Additemform from './Additemform';
 import { useState } from 'react';
 
-const Listview = ({ data , shouldBeShown , RetrieveData }) => {
+const Listview = ({ data , buttonsShouldBeShown , RetrieveData }) => {
     const arrdata = Object.entries(data.items);
 
     const [editIndex, setEditIndex] = useState(-1);
@@ -60,7 +60,7 @@ const Listview = ({ data , shouldBeShown , RetrieveData }) => {
             
             <li key={index}>
               {editIndex===index ?<Additemform onSubmit={handleFormSubmit} defaultName={item[1].itemName} defaultLink={item[1].itemLink}></Additemform> :  <><span>Name: {item[1].itemName}</span><br></br><a href={item[1].itemLink}>Link: {item[1].itemLink}</a></>}
-              {shouldBeShown===true ?(<>{editIndex===index ?<></>:<br></br>}<ItemButton onDelete={() => deleteItem(item[1]._id)} onUpdate={() => updateItem(item[1]._id, index)} buttonName={editIndex === index ? 'Cancel' : 'Update'}></ItemButton></>):(<></>)}
+              {buttonsShouldBeShown===true ?(<>{editIndex===index ?<></>:<br></br>}<ItemButton onDelete={() => deleteItem(item[1]._id)} onUpdate={() => updateItem(item[1]._id, index)} buttonName={editIndex === index ? 'Cancel' : 'Update'}></ItemButton></>):(<></>)}
             </li>
           ))}
         </ul>

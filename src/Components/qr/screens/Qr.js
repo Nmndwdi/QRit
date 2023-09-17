@@ -1,7 +1,19 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useState , useEffect } from 'react';
+import HomeService from '../../home/services/home_service';
+import Listview from '../../home/widgets/Listview';
 
 function Qr() {
+
+  const buttonsShouldBeShown = false;
+  const [data,setData] = useState(null);
+
+  async function RetrieveData(userId)
+  {
+    const resdata = await HomeService.GetItems(userId);
+    setData(resdata);
+  }
+
   useEffect(() => {
     // Get the URL search parameters
     const searchParams = new URLSearchParams(window.location.search);
@@ -11,8 +23,8 @@ function Qr() {
 
     // Check if userId exists and is not empty
     if (userId) {
-      console.log('User ID:', userId);
-      // You can now perform server-side logic or any client-side actions with the user ID.
+      // console.log('User ID:', userId);
+      if(data==null) RetrieveData(userId);
     } else {
       console.log('User ID not found in URL.');
     }
@@ -20,9 +32,9 @@ function Qr() {
 
 return (
 <>
-    <h1>
-        Home
-    </h1>
+    <div>
+        {data!=null ?(<Listview data={data} buttonsShouldBeShown={buttonsShouldBeShown} RetrieveData={RetrieveData}/>):(<></>)}
+    </div>
 </>
 )
 }

@@ -5,14 +5,14 @@ import Listview from './Listview';
 
 function UserItems({isChanged,toggleStateChanged}) {
 
-  const shouldBeShown = true;
+  const buttonsShouldBeShown = true;
 
   const [localIsChanged , setLocalIsChanged] = useState(isChanged);
   const [data,setData] = useState(null);
 
-  async function RetrieveData()
+  async function RetrieveData(userId)
   {
-    const resdata = await HomeService.GetItems();
+    const resdata = await HomeService.GetItems(userId);
     setData(resdata);
   }
 
@@ -34,11 +34,11 @@ function UserItems({isChanged,toggleStateChanged}) {
     handleToggle();
   }
 
-  if(data==null) RetrieveData();
+  if(data==null) RetrieveData(localStorage.getItem('x-user-id'));
 
   return (
     <div>
-        {data!=null ?(<Listview data={data} shouldBeShown={shouldBeShown} RetrieveData={RetrieveData}/>):(<></>)}
+        {data!=null ?(<Listview data={data} buttonsShouldBeShown={buttonsShouldBeShown} RetrieveData={RetrieveData}/>):(<></>)}
     </div>
   )
 }

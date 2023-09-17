@@ -66,10 +66,10 @@ class HomeService
         }
     }
 
-    static async GetItems()
+    static async GetItems(userId)
     {
         try {
-            const id=localStorage.getItem('x-user-id');
+            const id=userId;
             const response = await fetch(`${GlobalVariables.uri}/api/get-items`,{
                 method:'POST',
                 headers:{
