@@ -87,4 +87,37 @@ itemRouter.post("/api/delete-item",auth,async (req,res) => {
     }
 });
 
+itemRouter.post("/api/update-item",auth,async (req,res) => {
+    try {
+        const { id,objectId,item_name,item_link } = req.body;
+
+        let item =  await Item.findById(id);
+
+        if(item)
+        {
+            try {
+                for(let i=0;i<item.items.length;i++)
+                {
+                    if(item.items[i]._id.toString() === objectId.toString())
+                    {
+                        item.items[i].itemName=item_name;
+                        item.items[i].itemLink=item_link;
+                        break;
+                    }
+                }
+                item = await item.save();
+                res.json(item);
+            } catch (error) {
+                res.status(400).json({msg:'No item with this id'});
+            }
+        }
+        else
+        {
+            res.status(400).json({msg:'No user with this Id'});
+        }
+    } catch (e) {
+        res.status(500).json({error: e.message});
+    }
+});
+
 module.exports = itemRouter;

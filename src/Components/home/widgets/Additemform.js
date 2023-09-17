@@ -2,14 +2,19 @@ import React from 'react'
 import { useState } from 'react';
 import Toaster from '../../../constants/toaster';
 
-function Additemform({ onSubmit }) {
+function Additemform({ onSubmit , defaultName , defaultLink}) {
 
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState(defaultLink);
+    const [name,setName] = useState(defaultName);
     // const [validationMessage, setValidationMessage] = useState('');
 
-    const handleInputChange = (e) => {
+    const handleUrlChange = (e) => {
         setUrl(e.target.value);
     };
+
+    const handleNameChange = (e) =>{
+        setName(e.target.value);
+    }
 
     const validateLink = () => {
         // Simple URL validation using a regular expression
@@ -36,8 +41,7 @@ function Additemform({ onSubmit }) {
         {
             const formData = new FormData(form);
             const formJson = Object.fromEntries(formData.entries());
-            onSubmit(formJson);
-            
+            onSubmit(formJson); 
         }
         else
         {
@@ -50,8 +54,9 @@ function Additemform({ onSubmit }) {
         <form onSubmit={handleSubmit}>
             <div>
                 <label>
-                    <input type='text' name="item_name" placeholder='Site name' required autoComplete="off"/>
+                    <input type='text' name="item_name" placeholder='Site name' required autoComplete="off" value={name} onChange={handleNameChange}/>
                 </label>
+                {/* <br></br> */}
                 <label htmlFor="item_link"></label>
                 <input
                     type="text"
@@ -59,7 +64,7 @@ function Additemform({ onSubmit }) {
                     name="item_link"
                     placeholder="https://example.com"
                     value={url}
-                    onChange={handleInputChange}
+                    onChange={handleUrlChange}
                     required autoComplete='off'
                 />
                 <button type='Submit'>Submit</button>

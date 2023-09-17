@@ -61,7 +61,7 @@ function Home() {
       <h1>Home</h1>
       <button onClick={logout}>Logout</button>
       <UserItems isChanged={isChanged} toggleStateChanged={toggleStateChanged}></UserItems>
-      {isItemFormAdded && <Additemform onSubmit={handleFormSubmit}/>}
+      {isItemFormAdded && <Additemform onSubmit={handleFormSubmit} defaultName={''} defaultLink={''}/>}
       <button onClick={handleAddButtonClick}>{buttonName}</button>
     </div>
   )
