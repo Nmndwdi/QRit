@@ -1,4 +1,4 @@
-import Toaster from '../constants/toaster.js';
+import Toaster from '../common/toaster.js';
 
 async function httpErrorHandle(response,onSuccess)
 {

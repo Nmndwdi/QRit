@@ -1,15 +1,14 @@
 // import cookies from 'js-cookie';
-import httpErrorHandle from '../../../constants/error_handling.js';
-import Toaster from '../../../constants/toaster.js';
+import httpErrorHandle from '../../../common/error_handling.js';
+import Toaster from '../../../common/toaster.js';
+import GlobalVariables from '../../../constants/GlobalVariables.js';
 
 class AuthService
 {
-    // static uri='http://192.168.43.147:3000';
-    static uri='http://localhost:4000';
     static async Signup(data)
     {
         try {
-            const response = await fetch('http://localhost:4000/api/signup',{
+            const response = await fetch(`${GlobalVariables.uri}/api/signup`,{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json; charset=UTF-8',
@@ -33,7 +32,7 @@ class AuthService
     static async Signin(data)
     {
         try {
-            const response = await fetch('http://localhost:4000/api/signin',{
+            const response = await fetch(`${GlobalVariables.uri}/api/signin`,{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json; charset=UTF-8',
@@ -66,6 +65,7 @@ class AuthService
         {
             // console.log(e.message);
             alert(e.message);
+            // alert("hui hui");
         }
     }
 }

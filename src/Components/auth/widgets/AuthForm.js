@@ -26,7 +26,7 @@ function AuthForm({nameShouldBeShown , buttonName}) {
         else
         {
             const res = await AuthService.Signin(formJson);
-            if(res.status===200) goToHome();
+            if(res!==null && res.status===200) goToHome();
         }
     }
 

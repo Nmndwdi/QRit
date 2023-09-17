@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import Toaster from '../../../constants/toaster';
+import Toaster from '../../../common/toaster';
 
 function Additemform({ onSubmit , defaultName , defaultLink}) {
 
